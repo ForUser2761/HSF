@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.example.entity.Major;
 import org.example.entity.Student;
+import org.example.repository.JPAUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -56,33 +57,38 @@ public class Main {
          * merge() => update cập nhật bản ghi
          * remove() => delete
          */
+        EntityManager em = JPAUtils.getEntityManager();
+        em.getTransaction().begin();
+        Student s = em.find(Student.class, 3);
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hsf302");
-
-        EntityManager em = emf.createEntityManager();
-
-        try {
-            em.getTransaction().begin();
-
-            //tao 1 entity moi
-            Student student = new Student("Nguyen Van A", "abc@gmail.com", LocalDate.of(1996, 3, 6),
-                    Major.SOFTWARE_ENGINEERING, new BigDecimal(3.6));
-
-            //luu vao trong DB
-            em.persist(student);
-
-            em.getTransaction().commit();
-
-            System.out.println("Saved: " + student);
-            System.out.println("GENERATE VALUE: " + student.getId());
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            em.close();
-            emf.close();
+        if (s != null ) {
+            em.remove(s);
         }
+
+        em.getTransaction().commit();
+
+//        try {
+//            em.getTransaction().begin();
+//
+//            //tao 1 entity moi
+//            Student student = new Student("Nguyen Van A", "abc@gmail.com", LocalDate.of(1996, 3, 6),
+//                    Major.SOFTWARE_ENGINEERING, new BigDecimal(3.6));
+//
+//            //luu vao trong DB
+//            em.persist(student);
+//
+//            em.getTransaction().commit();
+//
+//            System.out.println("Saved: " + student);
+//            System.out.println("GENERATE VALUE: " + student.getId());
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            em.close();
+//            emf.close();
+//        }
 
     }
 }
