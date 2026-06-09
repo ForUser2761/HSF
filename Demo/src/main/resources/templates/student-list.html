@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Sinh viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<h1>Danh sách Sinh viên</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Họ tên</th>
+        <th>Email</th>
+        <th>Ngày sinh</th>
+        <th>Ngành</th>
+        <th>GPA</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.id}">1</td>
+        <td th:text="${student.name}">Nguyễn Văn A</td>
+        <td th:text="${student.email}">a@fpt.edu.vn</td>
+        <td th:text="${student.dob}">2003-01-01</td>
+        <td th:text="${student.major}">SE</td>
+        <td th:text="${student.gpa}">3.5</td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(students)}">Chưa có sinh viên nào.</p>
+</body>
+</html>
