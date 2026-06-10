@@ -3,8 +3,10 @@ package com.hsf302.studentweb.controller;
 import com.hsf302.studentweb.entity.Student;
 import com.hsf302.studentweb.repository.StudentRepository;
 //import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +39,11 @@ public class StudentController {
     }
 
     @PostMapping("/students/add")
-    public String addStudent(@ModelAttribute Student student) {
+    public String addStudent(@Valid @ModelAttribute Student student, BindingResult result) {
+        if (result.hasErrors()) {
+            return "student-form";
+        }
+
         studentRepository.save(student);
         return "redirect:/students";
     }
@@ -45,21 +51,7 @@ public class StudentController {
 
     @GetMapping("/students/edit/{id}")
     public String showCreateForm( @PathVariable Long id ,Model model) {
-//        Optional<Student> student = studentRepository.findById(id);
-//
-//        if (student.isEmpty()) {
-//            throw new IllegalArgumentException("Khong tim thay id: " + id);
-//        }
-
         Student student = studentRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("Khong tim thay: " + id));
-//        Student student = studentRepository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-//                "Sinh viên không tồn tại"));
-
-
-        //co du lieu hoac la khong
-        // isPresent() isEmpty()
-
-
         model.addAttribute("student", student);
         return "student-form";
     }
