@@ -1,6 +1,8 @@
 package com.hsf302.studentweb.entity;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 @Entity

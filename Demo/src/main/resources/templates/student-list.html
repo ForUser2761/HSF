@@ -42,6 +42,7 @@
         <th>Ngày sinh</th>
         <th>Ngành</th>
         <th>GPA</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -52,6 +53,11 @@
         <td th:text="${student.dob}">2003-01-01</td>
         <td th:text="${student.major}">SE</td>
         <td th:text="${student.gpa}">3.5</td>
+        <td>
+            <a th:href="@{/students/edit/{id}(id=${student.id}) }">Edit</a>
+            <a th:href="@{/students/delete/{id}(id=${student.id}) }" onclick="return confirm('Bạn có chắc chắn muốn xóa không ? ')">Delete</a>
+
+        </td>
     </tr>
     </tbody>
 </table>

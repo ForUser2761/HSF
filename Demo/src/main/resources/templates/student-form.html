@@ -15,7 +15,10 @@
 <body>
 <h1>Thêm Sinh viên mới</h1>
 
-<form th:action="@{/students/add}" th:object="${student}" method="post">
+<form th:action="${student.id != null}
+            ? '/students/edit/' + ${student.id}
+            : '/students/add'"
+      th:object="${student}" method="post">
 
     <label>Họ tên:</label>
     <input type="text" th:field="*{name}" placeholder="Nguyễn Văn A" required>
@@ -24,7 +27,7 @@
     <input type="email" th:field="*{email}" placeholder="abc@fpt.edu.vn" required>
 
     <label>Ngày sinh:</label>
-    <input type="date" th:field="*{dob}">
+    <input type="date" name="dob" th:value="${student.dob != null} ? ${#temporals.format(student.dob, 'yyyy-MM-dd')} : ''">
 
     <label>Ngành học:</label>
     <select th:field="*{major}">
